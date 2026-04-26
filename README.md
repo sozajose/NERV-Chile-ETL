@@ -2,9 +2,11 @@
 
 Bienvenido a la División de Operaciones de NERV. Tras la expansión de las instalaciones al cono sur, la base de operaciones en Chile requiere un sistema de datos robusto que soporte la logística interna. 
 
-Este repositorio contiene la solución completa para la **gestión de suministros críticos**, **seguimiento de despachos** y **monitoreo de indicadores operacionales** para el equipo de comando, desarrollado íntegramente en Python utilizando tecnologías modernas de Data Engineering.
+Este repositorio contiene la solución completa para la **gestión de suministros críticos**, **seguimiento de despachos** y **monitoreo de indicadores operacionales** para el equipo de comando, desarrollado íntegramente en Python utilizando tecnologías modernas de Data Engineering por José Francisco Soza Concha
 
 ---
+
+![Bohemian Rhapsody - Evangelion Opus Remastered (HD 1080p)](https://i.makeagif.com/media/4-04-2017/vkWY9-.gif)
 
 ## 🚀 Contexto de la Misión
 
@@ -20,11 +22,11 @@ El proyecto se divide secuencialmente en las siguientes etapas. Puedes seguir el
 
 ```mermaid
 graph TD;
-    A[1. Modelado DB\n(sql/schema.py)] --> B[2. Población Sintética\n(data/generate_data.py)];
-    B --> C[3. Queries Analíticas\n(sql/queries.py)];
-    C --> D[4. Extracción ETL\n(src/extract.py)];
-    D --> E[5. Transformación ETL\n(src/transform.py)];
-    E --> F[6. Carga y Reportes\n(outputs/report.py)];
+    A["1. Modelado DB<br>(sql/schema.py)"] --> B["2. Población Sintética<br>(data/generate_data.py)"];
+    B --> C["3. Queries Analíticas<br>(sql/queries.py)"];
+    C --> D["4. Extracción ETL<br>(src/extract.py)"];
+    D --> E["5. Transformación ETL<br>(src/transform.py)"];
+    E --> F["6. Carga y Reportes<br>(outputs/report.py)"];
     
     style A fill:#1e88e5,stroke:#0d47a1,stroke-width:2px,color:#fff
     style B fill:#43a047,stroke:#1b5e20,stroke-width:2px,color:#fff
@@ -43,6 +45,41 @@ Archivo encargado de definir la estructura relacional de cero utilizando SQLAlch
 - ⚙️ **Conexión:** Configura el engine apuntando a la base de datos `data/NERV.db`.
 - 🏗️ **Esquema:** Declara los modelos ORM estrictos: `Facility`, `Supplier` y `SupplyOrders`.
 - 🔐 **Reglas de Negocio:** Implementa restricciones de integridad como Foreign Keys, variables opcionales (Nullables) y CheckConstraints (asegurando que los montos financieros sean siempre > 0).
+
+**Esquema de la Base de Datos:**
+```mermaid
+erDiagram
+    facilities ||--o{ suppliers : "tiene"
+    facilities ||--o{ supply_orders : "origen_id"
+    suppliers ||--o{ supply_orders : "transportista_id"
+    
+    facilities {
+        integer facility_id PK
+        string name
+        string region
+        string city
+        string type
+        integer active
+    }
+    suppliers {
+        integer supplier_id PK
+        string name
+        string vehicle_type
+        integer facility_id FK
+        string status
+    }
+    supply_orders {
+        integer order_id PK
+        integer origin_id FK
+        integer supplier_id FK "nullable"
+        string recipient_name
+        string destination
+        date order_date
+        date delivery_date
+        string status
+        float amount "Check > 0"
+    }
+```
 
 ### 2. Generación de Datos (`data/generate_data.py`)
 Puebla la base de datos desde cero con datos hiper-realistas mediante la librería `Faker` y lógica condicional algorítmica.
@@ -107,4 +144,5 @@ Para ejecutar y validar este proyecto desde cualquier lugar, se requiere el arch
    ```
 
 ---
-*Misión cumplida, Shinji. Has completado con éxito la modernización de los datos.*
+*Felicidades Shinji*
+![felicidades shinji](https://i.makeagif.com/media/7-06-2019/Tsy954.gif)
