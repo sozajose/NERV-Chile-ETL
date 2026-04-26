@@ -1,0 +1,45 @@
+Logging
+
+Mi ruta de pensamiento y lo que le pregunté a la IA:
+
+He sido convocado para trabajar para NERV, lo cual no sé muy bien si es algo bueno o malo porque no he visto Evangelion xd, pero hay pega que hacer así que no hay tiempo para perderme en debates morales y hay que dedicarse a trabajar.
+
+En primera instancia debo crear la base de datos con sus esquemas, tablas y órdenes como lo indica el documento. Utilizaré SQLite y la librería de SQLalchemy para realizar
+las relaciones correctas. Lamentablemente no haré archivos .sql, pero es porque en verdad puedo hacerlo todo en mi IDE de confianza (Antigravity).
+
+Yo realicé a mano el archivo "schema.py"; los días anteriores había practicado en cómo construir bases de datos con SQLite usando sqlalchemy. Me aseguré de cumplir con todas las restricciones que salían en el pdf.
+
+Para la generación de los datos no sabía qué era la librería Faker, por lo que pregunté lo siguiente a la IA a que me enseñara cómo usarla con un ejemplo concreto. Luego pedí que me realizara la generación de acuerdo a lo que salía en el .pdf. Originalmente lo hizo muy bien, pero al revisar exhaustivamente no consideró algunas cosas importantes (inventó status, inventó regiones (Valparaíso por Ej xd y tipos de transporte (me dio risa que puso Aviones y Helicópteros, estaría bueno que MercadoLibre venga a dejarme un perfume así). Tuve que ir uno por uno comprobando que se cumplieran las condiciones.
+
+Las queries no fueron muy complicadas de hacer, por lo que no hay funciones muy extravagantes. Usé julianday (Día Juliano) que es bien clásico en SQLite para indicar precisión a la hora de relacionar fechas (Q4, Q5). También strftime para extraer mes (útil para Q6). Comentarios por cada Query:
+
+Q1: LEFT JOIN es vital aquí, porque si usaba un JOIN normal en volá habían instalaciones sin pedidos (no hay, pero por si acaso) y no estaría. También el CASE WHEN ayuda a no hacer consultas por separado.
+
+Q2: Con el date now (que tiene sentido con cómo se generó la data) se facilita mucho el cálculo de fechas del tipo (los últimos X días). Los JOINS eran necesarios.
+
+Q3: HAVING COUNT del order_id > 10 es la mejor forma de abordar lo que se pedía en el enunciado, ya que para qué vamos a evaluar regiones que no venden nada xd. El CAST as float también es necesario para tener porcentajes exactos.
+
+Q4: Aquí entra el Día Juliano, que es muy útil para los cálculos. El resto es bien directo, un select clássic. OJO: A la hora de generar los datos, asumí que cada pedido tenía una transportista asignado (más que nada porque no me fijé que la llave primaria podía ser nula, y para mí eso es un gran pecado XD), por lo que la Q4 siempre daba que no había resultados. Para ello ensucié un poco la lógica y permití nulos en la llave foránea en supplyorders.
+
+Q5: La misma lógica que Q4
+
+Q6: strftime soluciona la extracción. El resto son agrupar los casos que se piden con CASE WHEN igual que Q2.
+
+Una vez construidas las consultas, pedí a la IA que verificara si estaban bien, y me arrojó error en 2, las que me ayudó a modificar (errores con julianday)
+
+Finalmente las ejecuté con el código final de queries.py.
+
+Luego llegó la parte 2, que había estudiado bastante bien durante la semana previamente, por lo que no fue muy difícil. Es un clásico flujo de E y T con lo que se pide, y que más encima se hizo más fácil ya que es manejo de DataFrames exclusivamente, por lo que Python es experto en su manejo. Se ocupó "argparse" por recomendación de la IA por el tema de los directorios y que reconozca bien en cualquier entorno la base (en un ejemplo anterior lo había utilizado sin mayor problema)
+
+En la transformación no se me ocurrieron muchas inconsistencias clásicas, así que la IA me dio 2 más además de las del enunciado y, al correr el código, no se encontró nada, ya que Faker y Random hacían una muy excelente pega a la hora de crear datos correctos, por lo que yo manualmente inserté 3 registros erróneos con dichas inconsistencias para que se levantara la alerta. Nunca me he encontrado con una base de datos real sin inconsistencias, así que considero esto una muy buena práctica.
+
+El archivo report.py es un archivo clásico de uso de librerías de Python de visualización, por lo que no encontré mucho valor en escribirlo yo de base y le pedí a la IA que lo generara. Finalmente modifiqué títulos, colores, temas y cómo se veían los png de manera correcta.
+
+Finalmente le pedí a la IA que generara el README.md, ya que no me quedaba mucho tiempo para escribirlo por mi cuenta (considerando que escribía en paralelo este Logging constamente), además de que quería ayuda para generar gráficos, flujos, la relación entidad y poner unos gifs chistosos. Modifiqué a gusto personal algunas cosas y me centré en que se viera lindo con todas las ventajas que la IA aporta (buenos emojis, buena organización y un paso a paso de lo que significa el proyecto, además de añadirle mi característa cuota de humor en cada átomo de este proyecto.
+
+Doy por finalizado este Logging agradeciendo por haberse tomado el tiempo de crear esta prueba, estuvo muy entretenida y agradezco el factor "animé", me motiva mucho más a trabajar cuando algo no es tan serio y aburrido.
+
+Saludos a quien lea esto y prometo ver Evangelion algún día.
+
+Felicidades Pepe!
+
