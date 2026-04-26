@@ -6,7 +6,7 @@ Este repositorio contiene la solución completa para la **gestión de suministro
 
 ---
 
-![Evangelion Opus Remastered](assets/evangelion.gif)
+![Bohemian Rhapsody - Evangelion Opus Remastered (HD 1080p)](https://i.makeagif.com/media/4-04-2017/vkWY9-.gif)
 
 ## 🚀 Contexto de la Misión
 
@@ -145,6 +145,7 @@ Para ejecutar y validar este proyecto desde cualquier lugar, se requiere el arch
 
 ---
 
-![felicidades shinji](assets/felicidades_shinji.gif)
 *Felicidades Shinji*
+
+![Omedetou](https://media.tenor.com/6vR7S3EOf7MAAAAC/omedetou-congratulations.gif)
 
